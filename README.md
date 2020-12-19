@@ -1,3 +1,11 @@
+# Re-Vamped ...
+
+This was cloned from https://gitlab.com/byteQualia/codecard-avatar and https://learncodeshare.net/2020/01/29/use-ords-to-run-the-codecard-backend-on-your-own-free-oracle-cloud-database/ where I got the code for the code card designer. This designer is a simple SPA "Single Page Application" that allows someone to use the out of the box templates to build their own card design. The design itself is stored in an Oracle Database and uses ORDS REST APIs to store the data.
+
+At the moment:
+- this repo has the ORDS configuration and the schema
+- this repo has the SPA for the code card designer (the app.js has the default for the original appslab APIs by updating the apex.oracle.com URL you can point this to any cloud-based instance with the ORDS configured above.
+
 [oci]:https://cloud.oracle.com/en_US/cloud-infrastructure
 [oci-signup]:https://cloud.oracle.com/tryit
 
