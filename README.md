@@ -6,6 +6,147 @@ At the moment:
 - this repo has the ORDS configuration and the schema
 - this repo has the SPA for the code card designer (the app.js has the default for the original appslab APIs by updating the apex.oracle.com URL you can point this to any cloud-based instance with the ORDS configured above.
 
+The current stuff here that I've been able to test is:
+- [codecard-avatar/designer](/designer) where it can be hosted locally or on a site to present that designer
+- [codecard-avatar/designer-database](/designer-database) where it can be hosted anyway accessible by the designer (to design and save) and also the codecard (to download and activate on the card) The pre-requisites would be an Oracle Database with ORDS support. The easiest solution would be an Autonomous Databse in an Always Free Tier (https://cloud.oracle.com/tryit).
+
+NB: Need to ensure that the card is configured up with a database to enable the design - there is one available however I would deem it legacy and not necessarily under control.
+
+## Invoke with Code Card
+
+#### Establish serial connection with Code Card
+In order to configure our Code Card, we need to establish a serial connection over USB to the CodeCard CLI. Follow [this guide](https://github.com/cameronsenese/codecard/blob/master/terminal/README.md#connect-via-terminal-emulator) to establish the serial over USB connection. Remember to ensure that the Code Card WiFi settings are configure correctly also! (Direction available from the referenced guide).
+
+#### Configure `buttona1` button action
+*In the Code Card CLI, `buttona1` correlates to button A shortpress action.*
+
+In your terminal session you should now see the CodeCard CLI Menu, as follows.
+
+```
+***************************************************************************************
+  Code Card v1.0
+  Oracle Groundbreakers
+  developer.oracle.com/codecard
+***************************************************************************************
+Commands:
+  ls                Show all stored key/values
+  help              Show this help
+  shortpress[a|b]   Simulate the press of a button
+  longpress[a|b]    Simulate the long press of a button
+  connect           Connect to wifi
+  disconnect        Disconnect wifi
+  restart           Restart wifi
+  status            Show wifi status
+  home              Show home screen
+  reset             Reset to factory settings
+
+Usage:
+  Read saved key value:
+    key
+  Save new key value:
+    key=[value]
+
+Available keys:
+  ssid, password, buttona1, buttona2, buttonb1, buttonb2, fingerprinta1, fingerprinta2,
+  fingerprintb1, fingerprintb2, methoda1, methoda2, methodb1, methodb2,
+>>>
+```
+
+First, we will set the HTTP method for the A shortpress by entering the following command.
+*Keep in mind that pausing for 2 seconds while typing will automatically enter the command. It may be easier to pre-type the commands elsewhere and copy-paste them into the window.*
+
+```
+methoda1=POST
+```
+
+Code Card will confirm setting update as follows.
+
+```
+>>>
+Value saved for methoda1: POST
+>>>
+```
+
+Next configure the HTTP endpoint for the A shortpress by entering the following command. Be sure to substitute values in `<brackets>` as appropriate.
+
+```
+buttona1=<endpoint-url>
+```
+
+Code Card will confirm setting update as follows.
+
+```
+>>>
+Value saved for buttona1: <endpoint-url>
+>>>
+```
+
+### Invoke the function from the Code Card
+Ok, so now your Code Card are ready to Go! Powercycle your Code Card and perform a button A shortpress. If your card is still connected via the serial connection, you will see output similar to the following.
+
+```
+>>>
+Connecting to 'accesspoint1' .................connected!
+IP address: 192.168.43.168
+MAC address: CC:50:E3:CC:BF:FF
+>>>
+Request:
+  host: db4zhpxkc3pctfju6ziv541234.apigateway.us-ashburn-1.oci.customer-oci.com
+  port: 443
+  url: https://db4zhpxkc3pctfju6ziv54323u.apigateway.us-ashburn-1.oci.customer-oci.com/codecard/avatar
+  fingerprint: 2E 66 84 9D A5 2F 1C FC 40 85 9E 73 9F B3 AD 4E 9C 1C F8 ED
+  method: POST
+application/json
+Response:
+  {"template":"template8","title":"Joan Citizen","subtitle":"MVP: Oracle Dev Community","bodytext":"","backgroundColor":"white","backgroundImage":"https://objectstorage.<region>.oraclecloud.com/n/<tenancy>/b/codecard/o/identicon_bg_JoCi.bmp"}
+>>>
+Request:
+  host: objectstorage.<region>.oraclecloud.com
+  port: 443
+  url: https://objectstorage.<region>.oraclecloud.com/n/<tenancy>/b/codecard/o/identicon_bg_JoCi.bmp
+  fingerprint:
+  method: GET
+Response:
+  HTTP/1.1 200 OK
+  File size: 139530
+  Image Offset: 138
+  Header size: 124
+  Bit Depth: 24
+  Image size: 176x264
+  waited for available 1625 ms
+  waited for available 1115 ms
+  waited for available 1626 ms
+  waited for available 1114 ms
+  waited for available 1626 ms
+  waited for available 1626 ms
+  waited for available 1114 ms
+  waited for available 1626 ms
+  waited for available 1114 ms
+  waited for available 1626 ms
+  waited for available 1114 ms
+  waited for available 1626 ms
+  waited for available 2880 ms
+  waited for available 1627 ms
+  waited for available 7787 ms
+  waited for available 1626 ms
+  waited for available 4033 ms
+  waited for available 1626 ms
+  waited for available 3432 ms
+  waited for available 1625 ms
+  waited for available 2866 ms
+  waited for available 1626 ms
+  waited for available 2863 ms
+  downloaded in 50281 ms
+  bytes read 139530
+Shuting down...
+```
+
+Once completed, the custom bitmap will be output to the e-paper display:
+
+![alt text](images/identicon_bg_JoCi.png "Custom bitmap file")  
+
+The bitmap file is also available for download from the object storage bucket.
+
 [oci]:https://cloud.oracle.com/en_US/cloud-infrastructure
 [oci-signup]:https://cloud.oracle.com/tryit
 
