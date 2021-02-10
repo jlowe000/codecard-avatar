@@ -131,11 +131,11 @@ end;');
 begin
 
     tmpTitle := regexp_replace(:title, ''<.*?>'');
-    tmpTitle := replace(tmpTitle, ''&1'', '' '');
+    tmpTitle := replace(tmpTitle, ''&nbsp;'', '' '');
     tmpSubtitle := regexp_replace(:subtitle, ''<.*?>'');
-    tmpSubtitle := replace(tmpSubtitle, ''&1'', '' '');
+    tmpSubtitle := replace(tmpSubtitle, ''&nbsp;'', '' '');
     tmpBody := regexp_replace(:bodytext, ''<.*?>'');
-    tmpBody := replace(tmpBody, ''&1'', '' '');
+    tmpBody := replace(tmpBody, ''&nbsp;'', '' '');
 
     insert into CODEMAKER (
         BADGEID, BUTTONLABEL, BUTTONFUNCTION, TEMPLATE, TITLE, SUBTITLE, BODYTEXT, ICON, BADGE, BACKGROUNDIMAGE, BACKGROUNDCOLOR, FINGERPRINT, BARCODE
@@ -253,3 +253,4 @@ end;');
 COMMIT;
 
 END;
+/
