@@ -1,7 +1,7 @@
 BEGIN
   ORDS.enable_schema(
     p_enabled             => TRUE,
-    p_schema              => 'CODE_CADE',
+    p_schema              => 'CODE_CARD',
     p_url_mapping_type    => 'BASE_PATH',
     p_url_mapping_pattern => 'cc',
     p_auto_rest_auth      => TRUE
