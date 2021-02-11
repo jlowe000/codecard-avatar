@@ -9,7 +9,7 @@ os = oci.object_storage.ObjectStorageClient(config)
 
 namespace = os.get_namespace().data
 print(namespace)
-bucket = 'oci-arcade'
+bucket = 'codecard'
 
 files = glob.glob(sys.argv[1]+'/**/*.*',recursive=True)
 for file in files:
